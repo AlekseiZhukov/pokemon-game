@@ -1,14 +1,19 @@
-import s from './style.module.css'
+import React from "react";
 
-const Footer = ({title, descr}) => {
+const GamePage = ({onChangePage}) => {
+
+    const handleClick = () => {
+        onChangePage("app")
+    }
+
     return (
-        <footer >
-            <div className={s.wrapper}>
-                <h3>THANKS FOR VISITING</h3>
-                <p>© 2021 #ReactMarathon.</p>
+        <div >
+            This is Game Page!!!
+            <div>
+                <button onClick={handleClick}>return Home Page</button>
             </div>
-        </footer>
+        </div>
     )
 }
 
-export default Footer
+export default GamePage
