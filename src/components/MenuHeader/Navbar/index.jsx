@@ -4,9 +4,6 @@ import s from './style.module.css'
 
 
 const Navbar = ({menuIsActive, onChangeMenuState}) => {
-    const handleClick = () => {
-        onChangeMenuState && onChangeMenuState(false)
-    }
 
     return (
 
@@ -16,7 +13,7 @@ const Navbar = ({menuIsActive, onChangeMenuState}) => {
               LOGO
             </p>
             <a className={cn(s.menuButton, {[s.active] : menuIsActive})}
-            onClick={handleClick}>
+            onClick={() => onChangeMenuState && onChangeMenuState(false)}>
               <span />
             </a>
           </div>
