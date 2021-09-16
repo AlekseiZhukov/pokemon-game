@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {useHistory} from "react-router-dom";
 import {pokemons} from '../../data/pokemons'
-import s from './style.module.css'
 import PokemonCard from "../../components/PokemonCard";
 
 
