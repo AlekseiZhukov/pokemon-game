@@ -1,25 +1,19 @@
 import React from "react"
-import MenuHeader from "../../components/MenuHeader";
 import Header from "../../components/Header"
 import Layout from "../../components/Layout";
-import Footer from "../../components/Footer";
 import PokemonCard from "../../components/PokemonCard";
-import '../../App.css'
+
 import bgImg1 from '../../assets/images/bg2.jpg'
 import bgImg2 from '../../assets/images/bg1.jpg'
 import {pokemons} from '../../data/pokemons'
 
+function HomePage() {
 
 
-function HomePage({onChangePage}) {
-
-    const handleClickButton = (game) => {
-        onChangePage && onChangePage(game)
-    }
     return (
         <>
-            <MenuHeader />
-            <Header title="This is title" descr="This is Description!" onClickButton={handleClickButton}/>
+
+            <Header title="This is title" descr="This is Description!" />
 
             <Layout
                 id="rules"
@@ -52,6 +46,7 @@ function HomePage({onChangePage}) {
                                 id={item.id}
                                 type={item.type}
                                 values={item.values}
+
                             />
                         )
                     }
@@ -75,7 +70,7 @@ function HomePage({onChangePage}) {
                     the player's color instead. </p>
             </Layout>
 
-            <Footer />
+
         </>
     );
 }

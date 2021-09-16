@@ -2,17 +2,17 @@ import React, {useState} from "react";
 import Navbar from "./Navbar";
 import Menu from "./Menu";
 
-const MenuHeader = () => {
-    const [menuIsActive, setMenuIsActive] = useState(undefined)
+const MenuHeader = ({bgActive}) => {
+    const [menuIsActive, setMenuIsActive] = useState(null)
 
     const handleChangeMenuState = () => {
-        setMenuIsActive(!menuIsActive)
+        setMenuIsActive(prevState => !prevState)
     }
 
     return (
         <div>
-            <Navbar menuIsActive={menuIsActive} onChangeMenuState={handleChangeMenuState}/>
-            <Menu menuIsActive={menuIsActive}/>
+            <Navbar menuIsActive={menuIsActive} bgActive={bgActive} onChangeMenuState={handleChangeMenuState}/>
+            <Menu menuIsActive={menuIsActive} onChangeMenuState={handleChangeMenuState}/>
         </div>
     )
 
