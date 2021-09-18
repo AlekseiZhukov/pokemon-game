@@ -1,0 +1,39 @@
+
+
+.root {
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+.contentWrap {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  height: 90vh;
+  position: relative;
+}
+
+.img {
+  position: absolute;
+  min-width: 200px;
+  width: 60vw;
+  height: auto;
+  z-index: 1;
+  top: 50px;
+}
+.text404 {
+  font-size: 50vw;
+  letter-spacing: 4px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(4px 4px 24px rgba(1, 17, 38, 0.2));
+}
+.string {
+  color: #181d23;
+  font-size: 14px;
+  text-align: center;
+
+
+}
