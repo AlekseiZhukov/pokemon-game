@@ -4,70 +4,76 @@ import database from '../../service/firebase'
 //import {pokemons} from '../../data/pokemons'
 import PokemonCard from "../../components/PokemonCard";
 
-
+const idPokemon = new Date()
+const DATA = {
+    "abilities": [
+        "keen-eye",
+        "tangled-feet",
+        "big-pecks"
+    ],
+    "stats": {
+        "hp": 63,
+        "attack": 60,
+        "defense": 55,
+        "special-attack": 50,
+        "special-defense": 50,
+        "speed": 71
+    },
+    "type": "flying",
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+    "name": "pidgeotto",
+    "base_experience": 122,
+    "height": 11,
+    "id": +idPokemon,
+    "values": {
+        "top": "A",
+        "right": 2,
+        "bottom": 7,
+        "left": 5
+    }
+}
 
 const GamePage = () => {
 
     const history = useHistory()
     const [pokemonsData, setPokemonsData] = useState({})
-    const [keyPokemonIsActive, setKeyPokemonIsActive] = useState('')
-    const [addedNewPokemon, setAddedNewPokemon] = useState(false)
 
-    const getDataPokemons = () => {
+    const getPokemons = () => {
         database.ref('pokemons').once('value', (snapshot) => {
             setPokemonsData(snapshot.val())
         })
     }
 
-
     useEffect(() => {
-        getDataPokemons()
+        getPokemons()
     }, [])
 
 
-    useEffect(() => {
-    const modifiedPokemon = Object.entries(pokemonsData).filter(([key]) => key === keyPokemonIsActive).reduce((acc, el) => (acc[el[0]] = el[1]), {})
-        if (Object.keys(modifiedPokemon).length > 0) {
-            database.ref('pokemons/' + keyPokemonIsActive).set(modifiedPokemon)
-        }
-
-    }, [pokemonsData, keyPokemonIsActive])
-
-    useEffect( () => {
-        getDataPokemons()
-    },[addedNewPokemon])
-
-    const onchangeActiveCard = (id) => {
+    const handleChangeActive = (id) => {
 
         setPokemonsData(prevState => {
             return Object.entries(prevState).reduce((acc, item) => {
                 const pokemon = {...item[1]}
                 if (pokemon.id === id) {
-                    setKeyPokemonIsActive(`${item[0]}`)
-                    pokemon.active ? pokemon.active = false : pokemon.active = true
 
+                    pokemon.active = !pokemon.active
                 }
+
                 acc[item[0]] = pokemon
+
+                database.ref('pokemons/' + item[0]).set(pokemon)
 
                 return acc
             }, {})
-
         })
-
     }
 
-    const handleClickButton = () => {
-        const dataArray = Object.entries(pokemonsData)
-        const indexArray = Math.floor(Math.random() * (dataArray.length))
-        if (dataArray.length > 0) {
-            const data = dataArray[indexArray][1]
-            const newKey = database.ref().child('pokemons').push().key;
-            database.ref('pokemons/' + newKey).set(data);
-
-            setAddedNewPokemon(prewState => !prewState)
-        }
+    const handleAddPokemon = () => {
+        const data = DATA
+        const newKey = database.ref().child('pokemons').push().key;
+        database.ref('pokemons/' + newKey).set(data);
+        getPokemons()
     }
-
 
     const handleClick = () => {
         history.push('/')
@@ -75,13 +81,12 @@ const GamePage = () => {
 
     return (
         <>
-
             <div >
                 <div>
                     <button onClick={handleClick}>return Home Page</button>
                 </div>
                 <div>
-                    <button onClick={handleClickButton}>доавить покемона</button>
+                    <button onClick={handleAddPokemon}>доавить покемона</button>
                 </div>
                 <h1>
                     This is Game Page!!!
@@ -96,7 +101,7 @@ const GamePage = () => {
                             type={type}
                             values={values}
                             isActive={active}
-                            onchangeActiveCard={onchangeActiveCard}
+                            onchangeActiveCard={handleChangeActive}
                         />
                     )
                 }
