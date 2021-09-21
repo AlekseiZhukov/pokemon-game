@@ -2,8 +2,12 @@ import React from "react";
 import s from './style.module.css'
 import {useHistory} from "react-router-dom";
 
+
 const AboutPage = () => {
     const history = useHistory()
+
+
+
     return (
         <>
 
@@ -15,6 +19,7 @@ const AboutPage = () => {
                 <div>
                     <button onClick={ () => history.push('/')}>return Home Page</button>
                 </div>
+
             </div>
         </>
     )
