@@ -10,15 +10,15 @@ const MENU = [
     },
     {
         title: 'GAME',
-        to: 'game'
+        to: '/game'
     },
     {
         title: 'CONTACT',
-        to: 'contact'
+        to: '/contact'
     },
     {
         title: 'ABOUT',
-        to: 'about'
+        to: '/about'
     },
 ]
 
