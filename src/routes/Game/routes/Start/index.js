@@ -37,10 +37,6 @@ const StartPage = () => {
     }
 
 
-    const handleClick = () => {
-        history.push('/')
-    }
-
     const handleStartGameClick = () => {
         history.push('/game/board')
     }
@@ -48,14 +44,7 @@ const StartPage = () => {
     return (
         <>
             <div >
-                <div>
-                    <button
-                        onClick={handleClick}
 
-                    >
-                        return Home Page
-                    </button>
-                </div>
                 <div>
                     <button
                         onClick={handleStartGameClick}
