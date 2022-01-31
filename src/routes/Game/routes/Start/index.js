@@ -15,13 +15,14 @@ const StartPage = () => {
     const [pokemonsData, setPokemonsData] = useState({})
 
     useEffect(() => {
+        pokemonsContext.onCleanContext()
         firebase.getPokemonSoket((pokemons) => {
             setPokemonsData(pokemons)
         })
         return () => {
             firebase.offPokemonSoket()
         }
-    }, [])
+    }, [firebase])
 
     const handleChangeSelected = (key) => {
         const pokemon = {...pokemonsData[key]}
@@ -33,12 +34,6 @@ const StartPage = () => {
                 selected: !prevState[key].selected
             }
         }))
-
-    }
-
-
-    const handleClick = () => {
-        history.push('/')
     }
 
     const handleStartGameClick = () => {
@@ -48,14 +43,7 @@ const StartPage = () => {
     return (
         <>
             <div >
-                <div>
-                    <button
-                        onClick={handleClick}
 
-                    >
-                        return Home Page
-                    </button>
-                </div>
                 <div>
                     <button
                         onClick={handleStartGameClick}
@@ -63,6 +51,7 @@ const StartPage = () => {
                     >
                         Start Game
                     </button>
+
                 </div>
 
                 <div className={s.flex}>

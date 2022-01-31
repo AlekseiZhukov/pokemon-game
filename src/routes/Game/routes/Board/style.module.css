@@ -7,9 +7,19 @@
     position: relative;
 }
 
+.card {
+    width: 18vw;
+    height: 14.8vw;
+    margin-top: -6vw;
+}
+
+.card:first-child {
+    margin-top: 0;
+}
 .board {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 16.7vw 16.7vw 16.7vw;
+    grid-template-rows: 16.7vw 16.7vw 16.7vw;
     position: absolute;
     width: 50.3vw;
     height: 50.3vw;
@@ -23,6 +33,7 @@
     align-items: center;
     padding: 6px;
     cursor: pointer;
+
 }
 .boardPlate:hover {
     background: rgba(255,255,255, .1);
@@ -31,18 +42,19 @@
     background: none;
 }
 
-.card {
-    max-height: 14.8vw;
-    margin-top: -6vw;
-}
 
-.card:first-child {
-    margin-top: 0;
-}
 .playerOne {
     position: absolute;
     top: 4.3vw;
     left: 5vw;
-    width: 250px;
+    width: 18vw;
+    height: 50.3vw;
+}
+
+.playerTwo {
+    position: absolute;
+    top: 4.3vw;
+    right: 5vw;
+    width: 18vw;
     height: 50.3vw;
 }
