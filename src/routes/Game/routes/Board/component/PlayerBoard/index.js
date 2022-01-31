@@ -5,13 +5,13 @@ import s from "./style.module.css";
 
 
 
-const PlayerBoard = ({player, card, onClickCard}) => {
+const PlayerBoard = ({player, cards, onClickCard}) => {
     const [isSelected, setSelected] = useState(null)
     return (
         <>
             {
-                card.map((item) => (
-                    <div className={cn(s.cardBoard, {
+                cards.map((item) => (
+                    <div key = {item.id} className={cn(s.cardBoard, {
                         [s.selected]:isSelected === item.id
                     })}
                          onClick={() =>{
@@ -24,7 +24,7 @@ const PlayerBoard = ({player, card, onClickCard}) => {
                          }}
                     >
                         <PokemonCard
-
+                            className={s.card}
                             key={item.id}
                             name={item.name}
                             img={item.img}

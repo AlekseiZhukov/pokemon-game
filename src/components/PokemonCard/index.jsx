@@ -1,7 +1,7 @@
-import React  from "react";
+import React from "react";
 import cn from'classnames'
 import s from './style.module.css'
-import cardBackedPicture from '../../assets/images/card-back-side.jpg'
+//import cardBackedPicture from '../../assets/images/card-back-side.jpg'
 
 
 const PokemonCard = ({className, name, img, id, type, values, minimize, isActive, isSelected, onchangeActiveCard, possession}) => {
@@ -9,7 +9,9 @@ const PokemonCard = ({className, name, img, id, type, values, minimize, isActive
         onchangeActiveCard && onchangeActiveCard(id)
     }
 
+
     return (
+
             <div
                 className={cn(className, s.pokemonCard, {
                     [s.active]: isActive,
@@ -47,6 +49,7 @@ const PokemonCard = ({className, name, img, id, type, values, minimize, isActive
                 </div>
 
             </div>
+
         )
 }
 

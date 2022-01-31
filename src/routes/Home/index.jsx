@@ -1,13 +1,48 @@
-import React from "react"
+import React, {useContext, useEffect, useState} from "react"
 import Header from "../../components/Header"
 import Layout from "../../components/Layout";
 import PokemonCard from "../../components/PokemonCard";
 
 import bgImg1 from '../../assets/images/bg2.jpg'
 import bgImg2 from '../../assets/images/bg1.jpg'
-import {pokemons} from '../../data/pokemons'
+import {FireBaseContext} from "../../context/farebaseContext";
+import s from './style.module.css'
 
 function HomePage() {
+
+    const [pokemons, setPokemons] = useState({})
+    const firebase = useContext(FireBaseContext)
+
+    const handleChangActiveCard = (key) => {
+
+        setPokemons(prevState => {
+
+            return Object.entries(prevState).reduce((acc, item) => {
+                const pokemon = {...item[1]};
+                if (pokemon.id === key) {
+                    if(pokemon.active) {
+                        pokemon.active = !pokemon.active;
+                    } else {
+                        pokemon.active = true
+                    }
+
+                };
+                acc[item[0]] = pokemon;
+                return acc;
+            }, {});
+
+        })
+    }
+
+    useEffect(() => {
+        firebase.getPokemonSoket((pokemons) => {
+            setPokemons(pokemons)
+        })
+        return () => {
+            firebase.offPokemonSoket()
+        }
+
+    }, [firebase])
 
 
     return (
@@ -39,13 +74,18 @@ function HomePage() {
             >
                 <div className="flex">
                     {
-                        pokemons.map(item =>  <PokemonCard
-                                key={item.id}
+                        Object.entries(pokemons).map(([key, item]) =>
+                            <PokemonCard
+                                className = {s.card}
+                                key={key}
                                 name={item.name}
                                 img={item.img}
                                 id={item.id}
                                 type={item.type}
                                 values={item.values}
+                                isActive = {item.active}
+                                onchangeActiveCard={ () => handleChangActiveCard(item.id)}
+
 
                             />
                         )

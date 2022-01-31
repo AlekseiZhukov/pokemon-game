@@ -1,0 +1,27 @@
+.root {
+    margin-top: 4vw;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.card {
+    min-width: 15vw;
+    height: 25vw;
+    margin: 5px;
+    cursor: pointer;
+}
+.flex button {
+    margin: 4vw auto;
+
+}
+
+.pokemonCard.selected {
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
