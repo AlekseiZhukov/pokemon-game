@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom'
-//import {PokemonContext} from '../../../../context/pokemonContext';
 import PokemonCard from '../../../../components/PokemonCard';
 import s from './style.module.css';
 import PlayerBoard from "./component/PlayerBoard";
@@ -31,7 +30,6 @@ const BoardPage = () => {
     const pokemons = useSelector(selectedPokemons)
     const pokemonsPlayer2 = useSelector(player2Pokemons)
     const fetchingData = useSelector(loading)
-    //const {onAddPlayer2Pokemons } = useContext(PokemonContext)
     const [board, setBoard] = useState([])
     const [player1, setPlayer1] = useState(() => {
         return Object.values(pokemons).map(item => ({
