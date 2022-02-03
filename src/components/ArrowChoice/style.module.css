@@ -9,8 +9,9 @@
     /* Triangle Borders */
     border-top: 60px solid transparent;
     border-bottom: 60px solid transparent;
-    border-left: 100px solid yellow;
+    border-left: 100px solid rgba(255, 255, 0 , .5);
     animation: spin 1s linear infinite;
+    z-index: 1;
 }
 
 .rightSide {

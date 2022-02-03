@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom'
 import PokemonCard from '../../../../components/PokemonCard';
 import s from './style.module.css';
@@ -6,6 +6,7 @@ import PlayerBoard from "./component/PlayerBoard";
 import Result from "../../../../components/Result";
 import {useSelector, useDispatch} from "react-redux";
 import {getPokemonsPlayer2Async, player2Pokemons, selectedPokemons, loading} from "../../../../store/selectedPokemons";
+import ArrowChoice from "../../../../components/ArrowChoice";
 
 const counterWin = (board, player1, player2) => {
     let player1Count = player1.length
@@ -31,6 +32,8 @@ const BoardPage = () => {
     const pokemonsPlayer2 = useSelector(player2Pokemons)
     const fetchingData = useSelector(loading)
     const [board, setBoard] = useState([])
+    const [startPlayer, setStartPlayer] = useState(null)
+    const [startGame, setStartGame] = useState(false)
     const [player1, setPlayer1] = useState(() => {
         return Object.values(pokemons).map(item => ({
             ...item,
@@ -43,11 +46,25 @@ const BoardPage = () => {
     const [typeFinishedGame, setTypeFinishedGame] = useState(null)
     const history = useHistory()
 
+    const randomNumberPlayer = () => {
+        return Math.floor(Math.random()*2) + 1
+    }
+    const choiceStartPlayer = useCallback(() => {
+        setTimeout(() => {
+            setStartPlayer(randomNumberPlayer())
+            setStartGame(true)
+        }, 2000)
+
+    }, [])
+
     useEffect( () => {
+
         async function fetchData () {
+
             const boardResponse = await fetch('https://reactmarathon-api.netlify.app/api/board')
             const boardRequest = await boardResponse.json()
             setBoard(boardRequest.data)
+            choiceStartPlayer()
         }
         fetchData()
         dispatch(getPokemonsPlayer2Async())
@@ -56,7 +73,7 @@ const BoardPage = () => {
             setBoard([]);
         }
 
-    }, [dispatch])
+    }, [dispatch, choiceStartPlayer])
 
     useEffect( () => {
         pokemonsPlayer2 && setPlayer2( () => {
@@ -74,7 +91,13 @@ const BoardPage = () => {
 
     const handleClickBoardPlate = async (position) => {
 
-        if(choiceCard) {
+        if (choiceCard && startPlayer === 1){
+            setStartPlayer(2)
+        } else if (choiceCard && startPlayer === 2) {
+            setStartPlayer(1)
+        }
+
+        if(choiceCard ) {
             const params = {
                 position,
                 card: choiceCard,
@@ -100,10 +123,12 @@ const BoardPage = () => {
 
             setBoard(request.data)
             setSteps(prevState => prevState + 1)
+            setChoiceCard(null)
         }
     }
 
     useEffect( () => {
+
         if (steps === 9) {
             const [count1, count2] = counterWin(board, player1, player2)
 
@@ -131,10 +156,12 @@ const BoardPage = () => {
                     player={1}
                     cards ={player1}
                     onClickCard={(card) => setChoiceCard(card)}
+                    startPlayer ={startPlayer}
                 />
 
             </div>
             <div className={s.board}>
+                <ArrowChoice side = {startPlayer} stop={startGame}/>
                 {
                     board.map(item => (
                         <div
@@ -157,6 +184,7 @@ const BoardPage = () => {
                     player={2}
                     cards ={player2}
                     onClickCard={(card) => setChoiceCard(card)}
+                    startPlayer = {startPlayer}
                 />
             </div>
             { typeFinishedGame ? <Result type={typeFinishedGame} /> : null}

@@ -6,8 +6,6 @@ import {FireBaseContext} from "../../../../context/farebaseContext";
 import {useSelector} from "react-redux";
 import {player2Pokemons, selectedPokemons} from "../../../../store/selectedPokemons";
 
-
-
 const FinishPage = () => {
 
     const firebase = useContext(FireBaseContext)
@@ -24,13 +22,26 @@ const FinishPage = () => {
         setPlayer2Pokemons(prevState => {
             let copyState = [...prevState]
 
-            copyState.forEach(item => {
+            const newCopyState = copyState.map(item => {
                 if (item.id === id) {
-                    if(!item.selected) { item.selected = true} else { item.selected = !item.selected}
+                    if(!item.selected) {
+                        return {
+                            ...item,
+                            selected : true
+                        }
+
+                    } else {
+                        return {
+                            ...item,
+                            selected: !item.selected
+                        }
+
+                    }
                 }
+                return item
             })
 
-            return copyState
+            return newCopyState
         })
     }
 
@@ -67,7 +78,7 @@ const FinishPage = () => {
         return () => setSelectedCard(null)
     },[player2PokemonsData])
 
-    if (!pokemons || !player2Pokemons) {
+    if (!pokemons || !player2PokemonsData) {
         history.replace('/game/')
     }
 
