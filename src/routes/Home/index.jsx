@@ -8,7 +8,8 @@ import bgImg2 from '../../assets/images/bg1.jpg'
 import {FireBaseContext} from "../../context/farebaseContext";
 import s from './style.module.css'
 
-function HomePage() {
+
+const HomePage =() => {
 
     const [pokemons, setPokemons] = useState({})
     const firebase = useContext(FireBaseContext)

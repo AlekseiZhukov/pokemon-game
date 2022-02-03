@@ -26,6 +26,7 @@ const GamePage = () => {
                 [key]: pokemon
             }
         })
+
     }
 
     const handleAddPlayer2Pokemons = (pokemonsPlayer2) => {

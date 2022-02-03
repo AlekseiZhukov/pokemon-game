@@ -1,17 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
-import {PokemonContext} from "../../../../context/pokemonContext";
 import {useHistory} from "react-router-dom";
 import s from "./style.module.css";
 import PokemonCard from "../../../../components/PokemonCard";
 import {FireBaseContext} from "../../../../context/farebaseContext";
+import {useSelector} from "react-redux";
+import {player2Pokemons, selectedPokemons} from "../../../../store/selectedPokemons";
 
 
 
 const FinishPage = () => {
-    const { pokemons, player2Pokemons } = useContext(PokemonContext)
+
     const firebase = useContext(FireBaseContext)
+    const pokemons = useSelector(selectedPokemons)
+    const pokemonsPlayer2 = useSelector(player2Pokemons)
     const [selectedCard, setSelectedCard] = useState(null)
-    const [player2PokemonsData, setPlayer2Pokemons] = useState(player2Pokemons)
+    const [player2PokemonsData, setPlayer2Pokemons] = useState(pokemonsPlayer2)
     const [allPokemonsId, setAllPokemonsId] = useState([])
     const [message, setMessage] = useState('')
 
@@ -19,12 +22,14 @@ const FinishPage = () => {
 
     const handleChangeSelectedCard = (id) => {
         setPlayer2Pokemons(prevState => {
-            const copyState = [...prevState]
+            let copyState = [...prevState]
+
             copyState.forEach(item => {
                 if (item.id === id) {
-                    if(!item.selected) {item.selected = true} else {item.selected = !item.selected}
+                    if(!item.selected) { item.selected = true} else { item.selected = !item.selected}
                 }
             })
+
             return copyState
         })
     }
@@ -44,9 +49,7 @@ const FinishPage = () => {
 
     useEffect(() => {
         firebase.getPokemonSoket((pokemons) => {
-
             setAllPokemonsId(Object.entries(pokemons).map(([key, {id}]) => id))
-
         })
         return () => {
             firebase.offPokemonSoket()
@@ -67,6 +70,7 @@ const FinishPage = () => {
     if (!pokemons || !player2Pokemons) {
         history.replace('/game/')
     }
+
     return (
         <div className={s.root}>
 
