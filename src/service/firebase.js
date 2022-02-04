@@ -31,6 +31,10 @@ class Firebase {
 
     }
 
+    getPokemonsOnce = async () => {
+        return await this.database.ref('pokemons').once('value').then(snapshot => snapshot.val());
+    }
+
     postPokemon = (key, pokemon) => {
         this.database.ref(`pokemons/${key}`).set(pokemon);
     }
@@ -43,6 +47,7 @@ class Firebase {
 
 }
 
+const FirebaseClass = new Firebase()
 
-export default Firebase
+export default FirebaseClass
 

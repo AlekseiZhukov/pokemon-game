@@ -4,8 +4,10 @@ import s from './style.module.css'
 
 const Header = ({title, descr }) => {
     const history = useHistory()
+
     const handleClick = () => {
         history.push('/game')
+
     }
     return (
         <header className={s.root}>
