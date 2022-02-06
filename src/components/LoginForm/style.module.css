@@ -1,0 +1,7 @@
+.form span {
+    position: absolute;
+    font-size: 3vw;
+    right: 2vw;
+    color: #f300b4;
+    cursor: pointer;
+}
