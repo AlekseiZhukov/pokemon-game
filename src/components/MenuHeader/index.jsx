@@ -7,7 +7,7 @@ import LoginForm from "../LoginForm";
 
 const MenuHeader = ({bgActive}) => {
     const [menuIsActive, setMenuIsActive] = useState(null)
-    const [isOpenModal, setIsOpenModal] = useState(true)
+    const [isOpenModal, setIsOpenModal] = useState(false)
 
     const handleChangeMenuState = () => {
         setMenuIsActive(prevState => !prevState)
