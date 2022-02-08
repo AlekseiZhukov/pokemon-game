@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Input from "./Input";
 import s from './style.module.css'
 
 
-const LoginForm = ({onSubmit}) => {
+const LoginForm = ({onSubmit, isResetField = false}) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -14,11 +14,16 @@ const LoginForm = ({onSubmit}) => {
         onSubmit && onSubmit({
             email,
             password,
-            signIn
+            type: signIn ? 'login' : 'signUp',
         })
         setEmail('')
         setPassword('')
     }
+
+    useEffect(() => {
+        setEmail('')
+        setPassword('')
+    }, [isResetField])
 
     return (
             <form className={s.form} onSubmit={handleSubmit}>
