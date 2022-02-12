@@ -9,7 +9,6 @@ const PokemonCard = ({className, name, img, id, type, values, minimize, isActive
         onchangeActiveCard && onchangeActiveCard(id)
     }
 
-
     return (
 
             <div

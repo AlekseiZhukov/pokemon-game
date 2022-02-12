@@ -4,9 +4,9 @@ export const slice = createSlice({
     name: 'selectedPokemons',
     initialState: {
         data: {},
-        player2Pokemons: null,
+        player2Pokemons: [],
         isLoading: false,
-        selectedPokemon: null
+        typeFinishedGame: null
 
     },
     reducers: {
@@ -36,34 +36,32 @@ export const slice = createSlice({
             isLoading: false
         }),
 
-        addPlayer2Pokemons: (state, action) => ({
+        addPlayer2Pokemons: (state, action) => {
+
+            return  {
             ...state,
             player2Pokemons: action.payload,
             isLoading: false
 
-        }),
-        cleanPlayer2Pokemons: (state) => ({
-            ...state,
-            player2Pokemons: null,
-            isLoading: false
-        }),
+        }},
+
         setLoading: (state) => ({
             ...state,
             isLoading: true
+        }),
+        setTypeFinishedGame: (state, action) => ({
+            ...state,
+            typeFinishedGame: action.payload
         })
     }
 })
 
-export const {addSelectedPokemon, cleanSelectedPokemon, addPlayer2Pokemons, cleanPlayer2Pokemons, setLoading} = slice.actions
-export const selectedPokemons = state => state.selectedPokemons.data
+export const {addSelectedPokemon, cleanSelectedPokemon, addPlayer2Pokemons, setLoading, setTypeFinishedGame} = slice.actions
+export const selectedPokemonsPlayer1 = state => state.selectedPokemons.data
 export const player2Pokemons = state => state.selectedPokemons.player2Pokemons
 export const loading = state => state.selectedPokemons.isLoading
+export const typeFinishedGame = state => state.selectedPokemons.typeFinishedGame
 
-export const getPokemonsPlayer2Async = () => async (dispatch) => {
-    dispatch(setLoading())
-    const response = await fetch('https://reactmarathon-api.netlify.app/api/create-player')
-    const request = await response.json()
-    dispatch(addPlayer2Pokemons(request.data))
-}
+
 
 export default slice.reducer
