@@ -1,7 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {selectedPokemons, addSelectedPokemon, cleanSelectedPokemon } from "../../../../store/selectedPokemons";
+import {
+    selectedPokemonsPlayer1,
+    addSelectedPokemon,
+    cleanSelectedPokemon,
+    addPlayer2Pokemons, setTypeFinishedGame
+} from "../../../../store/selectedPokemons";
 import {
     getPokemonsAsync,
     selectPokemonsData,
@@ -11,26 +16,31 @@ import PokemonCard from "../../../../components/PokemonCard";
 import s from './style.module.css'
 
 
-
 const StartPage = () => {
 
     const pokemonsRedux = useSelector(selectPokemonsData)
-    const allSelectedPokemons = useSelector(selectedPokemons)
+    const allSelectedPokemons = useSelector(selectedPokemonsPlayer1)
     const isLoading = useSelector(selectPokemonsIsLoading)
     const dispatch = useDispatch()
     const history = useHistory()
     const [pokemonsData, setPokemonsData] = useState({})
 
     useEffect(() => {
-        dispatch(cleanSelectedPokemon())
+
         dispatch(getPokemonsAsync())
+        dispatch(cleanSelectedPokemon())
+        dispatch(addPlayer2Pokemons([]))
+        dispatch(setTypeFinishedGame(null))
+
     }, [dispatch])
 
     useEffect (() => {
+
         setPokemonsData(pokemonsRedux)
     }, [pokemonsRedux])
 
     const handleChangeSelected = (key) => {
+
         const pokemon = {...pokemonsData[key]}
         dispatch(addSelectedPokemon({key, pokemon}))
         setPokemonsData(prevState => ({
@@ -48,8 +58,8 @@ const StartPage = () => {
 
     return (
         <>
-            <div >
-                <div>
+            <div className={s.root}>
+                <div className={s.buttonWrap}>
                     <button
                         onClick={handleStartGameClick}
                         disabled={Object.keys(allSelectedPokemons).length < 5}

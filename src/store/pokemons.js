@@ -25,20 +25,27 @@ export const slice = createSlice({
             data: {},
             error: action.payload
 
+        }),
+        cleanPokemonsData: () => ({
+            data: {},
+            isLoading: false,
+            error: null
         })
     }
 })
 
-export const {fetchPokemons, fetchPokemonsResolve, fetchPokemonsError} = slice.actions
+export const {fetchPokemons, fetchPokemonsResolve, fetchPokemonsError, cleanPokemonsData} = slice.actions
 
 export const selectPokemonsIsLoading = state => state.pokemons.isLoading
 export const selectPokemonsData = state => state.pokemons.data
 
 export const getPokemonsAsync = () => async (dispatch, getState) => {
+
     const localId = selectLocalIdDataUser(getState())
     dispatch(fetchPokemons())
     const  data = await fetch(`https://pokemon-game-e19b3-default-rtdb.firebaseio.com/${localId}/pokemons.json`)
         .then(res => res.json());
+
     dispatch(fetchPokemonsResolve(data))
 }
 

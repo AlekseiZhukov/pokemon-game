@@ -9,9 +9,9 @@ const PlayerBoard = ({player, cards, onClickCard, startPlayer}) => {
     const [isSelected, setSelected] = useState(null)
 
     const handleOnClick = (item) => {
-        if (startPlayer === player) {
+        if (startPlayer === 1 && onClickCard) {
             setSelected(item.id)
-            onClickCard && onClickCard({
+            onClickCard({
                 player,
                 ...item,
 
@@ -24,7 +24,7 @@ const PlayerBoard = ({player, cards, onClickCard, startPlayer}) => {
             {
                 cards.map((item) => (
                     <div key = {item.id} className={cn(s.cardBoard, {
-                        [s.selected]:isSelected === item.id
+                        [s.selected]:isSelected === item.id || item.active
                     })}
                          onClick={() =>  handleOnClick(item) }
                     >
