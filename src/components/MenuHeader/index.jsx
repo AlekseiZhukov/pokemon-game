@@ -6,6 +6,7 @@ import Modal from "../Modal";
 import LoginForm from "../LoginForm";
 import {useDispatch} from "react-redux";
 import {getUserUpdateAsync} from "../../store/user";
+import FirebaseClass from "../../service/firebase";
 
 const loginSignUpUser = async ({email, password, type}) => {
 
@@ -62,19 +63,18 @@ const MenuHeader = ({bgActive}) => {
                         .then(res => res.json())
 
                     for (const item of pokemonsStart.data) {
-                        await fetch(`https://pokemon-game-e19b3-default-rtdb.firebaseio.com/${response.localId}/pokemons.json?auth=${response.idToken}`,
-                            {
-                                method: 'POST',
-                                body: JSON.stringify(item)
-                            })
+                        console.log('handleSubmitLoginForm item', item)
+                        await FirebaseClass.addPokemon(item, response.idToken, response.localId)
+
                     }
 
                     NotificationManager.success('You registered')
                 }
                 if (props.type === 'login') {
-                    dispatch(getUserUpdateAsync())
+
                     NotificationManager.success('You logged in')
                 }
+                dispatch(getUserUpdateAsync())
                 handleClickLogin()
             }
         }

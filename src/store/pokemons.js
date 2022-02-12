@@ -45,6 +45,7 @@ export const getPokemonsAsync = () => async (dispatch, getState) => {
     dispatch(fetchPokemons())
     const  data = await fetch(`https://pokemon-game-e19b3-default-rtdb.firebaseio.com/${localId}/pokemons.json`)
         .then(res => res.json());
+
     dispatch(fetchPokemonsResolve(data))
 }
 

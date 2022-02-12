@@ -14,8 +14,6 @@ import {
 } from "../../../../store/pokemons";
 import PokemonCard from "../../../../components/PokemonCard";
 import s from './style.module.css'
-//import FirebaseClass from "../../../../service/firebase";
-
 
 
 const StartPage = () => {
